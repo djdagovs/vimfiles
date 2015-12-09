@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # defaults
-gvimrc=0
 clean=0
 nvim=0
 
@@ -11,7 +10,6 @@ authoremail=""
 # usage
 function usage() {
 	echo "use: $0 [options]"
-    echo "  -g  also install gvimrc (ignore for nvim)"
 	echo "  -c  do clean installation"
     echo "  -n  install for nvim"
 	echo "  -h  show this usage"
@@ -21,7 +19,6 @@ function usage() {
 # process options
 while getopts ":a:e:gcnh" arg; do
 	case "$arg" in
-		g) gvimrc=1 ;;
 		c) clean=1 ;;
         n) nvim=1 ;;
 		h) usage ;;
@@ -31,18 +28,15 @@ done
 if [[ $nvim -eq 1 ]]; then
     configpath="$HOME/.config/nvim"
     vimrcfile="$HOME/.config/nvim/init.vim"
-    gvimrcfile=""
 else
     configpath="$HOME/.vim"
     vimrcfile="$HOME/.vimrc"
-    gvimrcfile="$HOME/.gvimrc"
 fi
 
 # clean current vim stuff
 if [[ $clean -ne 0 ]]; then
     [[ "$configpath" != "" ]] && rm -rf "$configpath"
     [[ "$vimrcfile" != "" ]] && rm -f "$vimrcfile"
-    [[ "$gvimrcfile" != "" ]] && rm -f "$gvimrcfile"
 fi
 
 # put the vimfiles in place
@@ -50,8 +44,6 @@ fi
 cp -a ./vimfiles/* "$configpath/"
 # copy new vimrc
 cp -a ./vimrc "$vimrcfile"
-# copy gvimrc when requested
-[[ $gvimrc -eq 1 ]] && [[ "$gvimrcfile" != "" ]] && cp -a ./gvimrc "$gvimrcfile"
 
 if [[ $nvim -eq 1 ]]; then
     nvim +PlugInstall +qall

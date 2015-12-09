@@ -16,12 +16,8 @@ Plug 'BlackIkeEagle/vim-colors-solarized'
 
 " filetype
 Plug 'pangloss/vim-javascript', { 'for': ['html', 'javascript'] }
-Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
-Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
 
 " plugins
-" project
-Plug 'joonty/vim-sauce'
 " file navigation
 Plug 'scrooloose/nerdtree'
 Plug 'tyok/nerdtree-ack'
@@ -32,26 +28,9 @@ Plug 'sk1418/QFGrep'
 Plug 'roblillack/vim-bufferlist'
 " statusline
 Plug 'bling/vim-airline'
-" extras
-Plug 'terryma/vim-multiple-cursors'
-Plug 'godlygeek/tabular'
-Plug 'mbbill/undotree'
-" general coding
-Plug 'Townk/vim-autoclose'
-Plug 'Valloric/MatchTagAlways'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
-Plug 'majutsushi/tagbar'
-" vcs
-Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
-" php
-Plug 'EvanDotPro/php_getset.vim'
-Plug 'joonty/vdebug'
-" snippets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 
 call plug#end()
 
@@ -158,7 +137,7 @@ au BufReadPost *.diz set fileencodings=utf-8,ucs-bom,cp1250
 """"
 
 " airline
-let g:airline_powerline_fonts=1
+let g:airline_powerline_fonts=0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#whitespace#enabled = 0
@@ -167,9 +146,6 @@ let g:airline#extensions#whitespace#enabled = 0
 "let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 "let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
 
-" AutoClose settings
-let g:AutoCloseOn=0
-let g:AutoClosePairs= {'(': ')', '[': ']', '"': '"', "'": "'", '<': '>'}
 " syntastic
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=1
@@ -199,19 +175,6 @@ elseif executable('ack')
 else
     let s:ctrlp_fallback = 'find %s -type f'
 endif
-
-" MatchTagAlways
-let g:mta_filetypes = {
-    \ 'html' : 1,
-    \ 'xhtml' : 1,
-    \ 'xml' : 1,
-    \ 'jinja' : 1,
-    \ 'phtml' : 1,
-    \ 'twig' : 1,
-    \}
-
-" vim-signify
-let g:signify_vcs_list = [ 'git', 'hg', 'svn' ]
 
 """"
 " extra keymappings
