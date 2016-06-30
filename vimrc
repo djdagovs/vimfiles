@@ -1,6 +1,6 @@
 " BlackEagles vimrc for Linux && Windows
 "
-" (c) 2010 - 2015
+" (c) 2010 - 2016
 
 " nocompatible has to be the first of all ( use the real vimpower )
 set nocompatible
@@ -13,6 +13,7 @@ call plug#begin('~/.vim/plugged')
 " colors
 Plug 'tomasr/molokai'
 Plug 'BlackIkeEagle/vim-colors-solarized'
+Plug 'kristijanhusak/vim-hybrid-material'
 
 " filetype
 Plug 'pangloss/vim-javascript', { 'for': ['html', 'javascript'] }
@@ -27,7 +28,7 @@ Plug 'sk1418/QFGrep'
 " buffers
 Plug 'roblillack/vim-bufferlist'
 " statusline
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
@@ -45,11 +46,11 @@ call plug#end()
 " set regexpengine=1
 
 " set leader key
-let mapleader = ','
+let mapleader = ' '
 
 " set the colorsheme
-colorscheme molokai
 set background=dark
+colorscheme hybrid_material
 
 " backup rules
 set backup
@@ -137,6 +138,7 @@ au BufReadPost *.diz set fileencodings=utf-8,ucs-bom,cp1250
 """"
 
 " airline
+let g:airline_theme='hybrid'
 let g:airline_powerline_fonts=0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
