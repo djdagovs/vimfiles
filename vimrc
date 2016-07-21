@@ -29,6 +29,8 @@ Plug 'sk1418/QFGrep'
 Plug 'roblillack/vim-bufferlist'
 " statusline
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" general coding
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
