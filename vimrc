@@ -55,7 +55,6 @@ Plug 'mbbill/undotree'
 Plug 'tpope/vim-abolish'
 " general coding
 Plug 'Townk/vim-autoclose'
-Plug 'Valloric/MatchTagAlways'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
@@ -225,16 +224,6 @@ let NERDTreeCascadeOpenSingleChildDir=0
 " syntastic
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_loc_list=1
-
-" MatchTagAlways
-let g:mta_filetypes = {
-    \ 'html' : 1,
-    \ 'xhtml' : 1,
-    \ 'xml' : 1,
-    \ 'jinja' : 1,
-    \ 'phtml' : 1,
-    \ 'twig' : 1,
-    \}
 
 if version >= 702
     autocmd BufWinLeave * call clearmatches()
