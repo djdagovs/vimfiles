@@ -1,6 +1,6 @@
 " BlackEagles vimrc for Linux && Windows
 "
-" (c) 2010 - 2016
+" (c) 2010 - 2017
 
 " nocompatible has to be the first of all ( use the real vimpower )
 set nocompatible
@@ -9,16 +9,33 @@ set nocompatible
 " Plug config
 """"
 
-call plug#begin('~/.vim/plugged')
+
+if (has("nvim"))
+    call plug#begin('~/.local/share/nvim/plugged')
+else
+    call plug#begin('~/.vim/plugged')
+endif
 " colors
-Plug 'tomasr/molokai'
-Plug 'BlackIkeEagle/vim-colors-solarized'
-Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'chriskempson/base16-vim'
+Plug 'morhetz/gruvbox'
+Plug 'sonph/onehalf', {'rtp': 'vim' }
 
 " filetype
+Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'pangloss/vim-javascript', { 'for': ['html', 'javascript'] }
+Plug 'mxw/vim-jsx', { 'for': ['html', 'javascript'] } " jsx, react
+Plug 'HerringtonDarkholme/yats.vim' " typescript
+Plug 'nono/jquery.vim', { 'for': ['html', 'javascript'] }
+Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
+Plug 'groenewege/vim-less', { 'for': 'less' }
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'pld-linux/vim-syntax-vcl' " varnish
+Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
+Plug 'StanAngeloff/php.vim', { 'for': 'php' }
+Plug 'chr4/nginx.vim', { 'for': 'nginx' }
+Plug 'vim-scripts/SyntaxRange' " change syntax for specific range
 
-" plugins
 " file navigation
 Plug 'scrooloose/nerdtree'
 Plug 'tyok/nerdtree-ack'
@@ -27,13 +44,24 @@ Plug 'mileszs/ack.vim'
 Plug 'sk1418/QFGrep'
 " buffers
 Plug 'roblillack/vim-bufferlist'
+Plug 'mattboehm/vim-accordion'
 " statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" extras
+Plug 'terryma/vim-multiple-cursors'
+Plug 'godlygeek/tabular'
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-abolish'
 " general coding
+Plug 'Townk/vim-autoclose'
+Plug 'Valloric/MatchTagAlways'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
+Plug 'itspriddle/vim-stripper'
+Plug 'terryma/vim-expand-region'
+Plug 'matze/vim-move'
 
 call plug#end()
 
@@ -41,18 +69,8 @@ call plug#end()
 " default vim settings
 """""
 
-" dont do matchparen
-"let loaded_matchparen = 1
-
-" big nesting with new regexpengine is slooooooow
-" set regexpengine=1
-
 " set leader key
 let mapleader = ' '
-
-" set the colorsheme
-set background=dark
-colorscheme hybrid_material
 
 " backup rules
 set backup
@@ -100,6 +118,7 @@ set hidden                " hide buffer even when changed
 set scrolloff=4           " keep at least 4 lines above or below the cursor
 set colorcolumn=80,120    " show column 80 and 120 in different color
 set wildmode=longest,full " command completion longest common part, then all.
+set wildmenu              " enable the command completion menu
 
 " fileformat stuff
 "set fileformat=unix
@@ -136,23 +155,43 @@ au BufReadPre *.diz set fileencodings=cp437
 au BufReadPost *.diz set fileencodings=utf-8,ucs-bom,cp1250
 
 """"
+" extra keymappings
+"""""
+
+" sudo save (when one forgets to sudo vim)
+cmap w!! w !sudo tee % >/dev/null
+
+" custom mapping
+nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
+nnoremap <silent> <Leader>tb :TagbarToggle<CR>
+nnoremap <silent> <Leader>ut :UndotreeToggle<CR>
+nnoremap <silent> <Leader>bl :call BufferList()<CR>
+nnoremap <silent> <Leader>lt :set list!<CR>
+
+" signcolumn highlight clear (matching background)
+highlight clear SignColumn
+
+" set the colorsheme
+if (has("termguicolors"))
+    set termguicolors
+endif
+set background=dark
+colorscheme onehalfdark
+
+""""
 " settings for plugins
 """"
 
+" jsx syntax
+let g:jsx_ext_required = 0
+
 " airline
-let g:airline_theme='hybrid'
-let g:airline_powerline_fonts=0
+let g:airline_theme='onehalfdark'
+let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#whitespace#enabled = 0
-
-" SuperTab settings
-"let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-"let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-
-" syntastic
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
 
 " Ack.vim
 if executable('ag')
@@ -180,20 +219,22 @@ else
     let s:ctrlp_fallback = 'find %s -type f'
 endif
 
-""""
-" extra keymappings
-"""""
+" NERDTree
+let NERDTreeCascadeOpenSingleChildDir=0
 
-" sudo save (when one forgets to sudo vim)
-cmap w!! w !sudo tee % >/dev/null
+" syntastic
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
 
-" custom mapping
-nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
-nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
-nnoremap <silent> <Leader>tb :TagbarToggle<CR>
-nnoremap <silent> <Leader>ut :UndotreeToggle<CR>
-nnoremap <silent> <Leader>bl :call BufferList()<CR>
-nnoremap <silent> <Leader>lt :set list!<CR>
+" MatchTagAlways
+let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \ 'phtml' : 1,
+    \ 'twig' : 1,
+    \}
 
 if version >= 702
     autocmd BufWinLeave * call clearmatches()
