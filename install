@@ -33,6 +33,8 @@ else
     vimrcfile="$HOME/.vimrc"
 fi
 
+cd "$(dirname "$(readlink -f "$0")")"
+
 # clean current vim stuff
 if [[ $clean -ne 0 ]]; then
     [[ "$configpath" != "" ]] && rm -rf "$configpath"
