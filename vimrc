@@ -179,7 +179,11 @@ if (has("termguicolors"))
     set termguicolors
 endif
 set background=dark
-colorscheme onehalfdark
+try
+    colorscheme onehalfdark
+catch /^Vim\%((\a\+)\)\=:E185/
+    " deal with it
+endtry
 
 """"
 " settings for plugins
